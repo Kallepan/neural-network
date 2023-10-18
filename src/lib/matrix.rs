@@ -235,15 +235,15 @@ mod tests {
 
     #[test]
     fn test_map() {
-        let mut m0 = Matrix::from(vec![vec![1.0, 2.0], vec![3.0, 4.0]]);
+        let m0 = Matrix::from(vec![vec![1.0, 2.0], vec![3.0, 4.0]]);
         let r0 = m0.map(&|x| x * 2.0);
         assert_eq!(r0.data, vec![vec![2.0, 4.0], vec![6.0, 8.0]]);
 
-        let mut m1 = Matrix::from(vec![vec![1.0, 2.0], vec![3.0, 4.0]]);
+        let m1 = Matrix::from(vec![vec![1.0, 2.0], vec![3.0, 4.0]]);
         let r1 = m1.map(&|x| x + 1.0);
         assert_eq!(r1.data, vec![vec![2.0, 3.0], vec![4.0, 5.0]]);
 
-        let mut m2 = Matrix::from(vec![vec![1.0, 2.0], vec![3.0, 4.0]]);
+        let m2 = Matrix::from(vec![vec![1.0, 2.0], vec![3.0, 4.0]]);
         fn f(x: f64) -> f64 {
             x * 2.0
         }

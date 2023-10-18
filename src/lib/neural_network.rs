@@ -60,7 +60,7 @@ impl Network<'_> {
         }
 
         // get difference between outputs and targets as errors
-        let mut parsed = Matrix::from(vec![outputs]).transpose();
+        let parsed = Matrix::from(vec![outputs]).transpose();
         let mut errors = Matrix::from(vec![targets]).transpose().subtract(&parsed);
         // Get gradients of outputs by applying derivative of activation function
         let mut gradients = parsed.map(self.activation.derivative);
