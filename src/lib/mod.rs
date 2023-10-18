@@ -1,2 +1,3 @@
 pub mod matrix;
-pub mod utils;
+pub mod neural_network;
+pub mod activation;
