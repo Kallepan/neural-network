@@ -12,31 +12,19 @@ pub struct Matrix {
 }
 
 impl Matrix {
-    pub fn new(rows: usize, cols: usize) -> Self {
+    pub fn new(rows: usize, cols: usize) -> Matrix {
         /*
         * Create a new matrix with all values set to 0.0
         */
         
-        Self {
+        Matrix {
             rows,
             cols,
             data: vec![vec![0.0; cols]; rows],
         }
     }
 
-    pub fn from(arr: Vec<Vec<f64>>) -> Matrix {
-        /*  
-        * Create a matrix from a 2D array
-        */
-
-        Matrix {
-            rows: arr.len(),
-            cols: arr[0].len(),
-            data: arr,
-        }
-    }
-
-    pub fn random(rows: usize, cols: usize) -> Self {
+    pub fn random(rows: usize, cols: usize) -> Matrix {
         /* Create a matrix with random values between -1 and 1 */
 
         let mut m = Matrix::new(rows, cols);
@@ -49,6 +37,18 @@ impl Matrix {
         }
 
         m
+    }
+
+    pub fn from(arr: Vec<Vec<f64>>) -> Matrix {
+        /*  
+        * Create a matrix from a 2D array
+        */
+
+        Matrix {
+            rows: arr.len(),
+            cols: arr[0].len(),
+            data: arr,
+        }
     }
 
     pub fn multiply(&self, other: &Matrix) -> Matrix {
@@ -69,6 +69,7 @@ impl Matrix {
                 for k in 0..self.cols {
                     sum += self.data[i][k] * other.data[k][j];
                 }
+
                 result.data[i][j] = sum;
             }
         }
@@ -141,25 +142,25 @@ impl Matrix {
     }
 
 
-    pub fn map(&mut self, func: &dyn Fn(f64) -> f64) -> Matrix {
+    pub fn map(&self, func: &dyn Fn(f64) -> f64) -> Matrix {
         /*
         * Apply a function to every element of the matrix
         */
-        Matrix::from(self.data.iter()
-        .map(
-            |row| row
-            .iter()
-            .map(|x| func(*x))
-            .collect())
-        .collect())
+        Matrix::from(
+            (self.data)
+                .clone()
+                .into_iter()
+                .map(|row| row.into_iter().map(|x| func(x)).collect())
+                .collect(),
+        )
     }
 
     
-    pub fn transpose(&self) -> Self {
+    pub fn transpose(&self) -> Matrix {
         /*
         * Transpose the matrix
         */
-        let mut result = Self::new(self.cols, self.rows);
+        let mut result = Matrix::new(self.cols, self.rows);
         
         for i in 0..self.rows {
             for j in 0..self.cols {
